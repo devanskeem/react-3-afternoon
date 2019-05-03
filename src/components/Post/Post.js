@@ -6,7 +6,6 @@ import MessageIcon from 'react-icons/lib/md/mail-outline';
 import MasterControlIcon from 'react-icons/lib/md/more-vert';
 
 import './Post.css';
-
 import Edit from './Edit/Edit';
 
 //////////////////////////////////////////////////////// THIS COMPONENT IS BEING RENDERED IN THE *APP* COMPONENT
@@ -17,7 +16,8 @@ export default class Post extends Component {
 
     this.state = {
       editing: false,
-      showMasterMenu: false
+      showMasterMenu: false,
+      id: ''
     };
 
     this.hideEdit = this.hideEdit.bind( this );
@@ -49,6 +49,8 @@ export default class Post extends Component {
     }
   }
 
+
+
   render() {
     // This is destructuring! You can also think of it as being written as so:
       // const editing = this.state.editing
@@ -66,12 +68,12 @@ export default class Post extends Component {
           {/* Drop-down menu. Remember that the "showMasterMenu" variable has been destructured off of this.state */}
           <div className="Post__master-menu" style={ { display: showMasterMenu ? 'flex' : 'none' } }>
             <span onClick={ this.showEdit }>Edit</span>
-            <span>Delete</span>
+            <span onClick={this.props.deletePostFn.bind(this, this.props.id)}>Delete</span>
           </div>
         </div>
 
         {/* This is where all the meta data of the post will go (who, when, where) */}
-        <div className="Post__meta-data">
+        <div className="Post__meta-data"> 
           <div className="Post__profile-picture">
             <ProfileIcon />
           </div>
@@ -79,7 +81,7 @@ export default class Post extends Component {
           <span className="Post__name">DevMountain</span>
           <span className="Post__handle">@DevMountain</span>
 
-          <span className="Post__date">- POST DATE GOES HERE</span>
+          <span className="Post__date">{this.props.date}</span>
         </div>
 
         {/* This is where the text goes. Notice the turnary statement. The turnary statement decides to display either the text OR the editor view
@@ -90,15 +92,17 @@ export default class Post extends Component {
                 <span ... ></span>
               }
         */}
-        <div className="Post__content">
+        <div className="Post__content" >
           {
             // This has been pulled off of this.state via destructuring
             editing
             ?
               <Edit text=""
-                    hideEdit={ this.hideEdit } />
+                    hideEdit={ this.hideEdit } 
+                    updatePostFn={this.props.updatePostFn}
+                    id={this.props.id}/>
             :
-              <span className="Post__text">POST TEXT GOES HERE</span>
+              <span className="Post__text">{this.props.text}</span>
           }
         </div>
 

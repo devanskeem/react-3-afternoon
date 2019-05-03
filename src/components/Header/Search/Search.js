@@ -7,12 +7,24 @@ import SearchIcon from 'react-icons/lib/md/search';
 //////////////////////////////////////////////////////// THIS COMPONENT IS BEING RENDERED IN THE *HEADER* COMPONENT
 
 export default class Search extends Component {
+  constructor(){
+    super()
+    this.state = {
+      searchString: ''
+    }
+  } 
+
+  
+
+
   render() {
+    console.log(this.props.posts)
     return (
+      
       <section className="Search__parent">
 
         <div className="Search__content">
-          <input placeholder="Search Your Feed" />
+          <input placeholder="Search Your Feed" onChange={(e) => this.props.filterFn(e.target.value, this.props.posts)}/>
 
           <SearchIcon id="Search__icon" />
         </div>
